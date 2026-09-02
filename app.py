@@ -1,5 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -12,11 +17,11 @@ app.secret_key = "hostel_management_secret"
 
 def get_connection():
     return mysql.connector.connect(
-        host="host.docker.internal",
-        port=3306,
-        user="root",
-        password="root",
-        database="hostel_management"
+        host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT", "3306")),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
 
 
@@ -459,7 +464,6 @@ def allocations():
         allocation_date = request.form["allocation_date"]
 
         # Check whether student already has an active room
-
         cursor.execute(
             """
             SELECT *
@@ -479,7 +483,6 @@ def allocations():
         else:
 
             # Check room capacity
-
             cursor.execute(
                 """
                 SELECT *
@@ -502,7 +505,6 @@ def allocations():
             else:
 
                 # Create allocation
-
                 cursor.execute(
                     """
                     INSERT INTO room_allocations
@@ -528,7 +530,6 @@ def allocations():
                 )
 
                 # Increase occupied count
-
                 new_occupied = room["occupied"] + 1
 
                 if new_occupied >= room["capacity"]:
@@ -602,15 +603,11 @@ def allocations():
             ra.allocation_date,
             ra.vacate_date,
             ra.status
-
         FROM room_allocations ra
-
         JOIN students s
             ON ra.student_id = s.student_id
-
         JOIN rooms r
             ON ra.room_id = r.room_id
-
         ORDER BY ra.allocation_id DESC
         """
     )
@@ -668,8 +665,7 @@ def fees():
                 last_date,
                 payment_status
             )
-            VALUES
-            (%s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s)
             """,
             (
                 student_id,
@@ -709,12 +705,9 @@ def fees():
             f.payment_date,
             f.last_date,
             f.payment_status
-
         FROM fees f
-
         JOIN students s
             ON f.student_id = s.student_id
-
         ORDER BY f.fee_id DESC
         """
     )
@@ -814,12 +807,9 @@ def leaves():
             l.to_date,
             l.reason,
             l.status
-
         FROM leaves l
-
         JOIN students s
             ON l.student_id = s.student_id
-
         ORDER BY l.leave_id DESC
         """
     )
