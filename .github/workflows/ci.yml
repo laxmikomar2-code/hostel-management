@@ -30,7 +30,7 @@ jobs:
 
       - name: Run automated tests
         run: |
-          pytest -v
+          python -m pytest -v
 
       - name: Build Docker image
         run: |
