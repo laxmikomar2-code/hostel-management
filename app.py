@@ -12,7 +12,7 @@ app.secret_key = "hostel_management_secret"
 
 def get_connection():
     return mysql.connector.connect(
-        host="127.0.0.1",
+        host="host.docker.internal",
         port=3306,
         user="root",
         password="root",
@@ -944,4 +944,4 @@ def logout():
 # =========================================================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
