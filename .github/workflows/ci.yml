@@ -1,13 +1,11 @@
-name: Hostel Management CI
-
 on:
   push:
     branches:
       - main
+      - feature/admin-timing
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
