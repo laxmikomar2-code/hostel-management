@@ -1,11 +1,15 @@
+name: Hostel Management CI
+
 on:
   push:
     branches:
       - main
       - feature/admin-timing
+
   pull_request:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,6 +27,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Run automated tests
+        run: |
+          pytest -v
 
       - name: Build Docker image
         run: |
