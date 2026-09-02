@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hostel Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #07111f, #163d59);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .login-btn {
+            text-decoration: none;
+            background: #0072ff;
+            color: white;
+
+            padding: 10px 20px;
+            border-radius: 7px;
+
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 520px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 40px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            color: #07111f;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #0072ff;
+            color: white;
+
+            padding: 14px 28px;
+
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .start-btn:hover {
+            background: #005dcc;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            padding: 50px 40px;
+            background: white;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .feature-grid {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+
+            padding: 25px 15px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+        }
+
+        .feature-card .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer {
+            background: #07111f;
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        @media (max-width: 950px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .navbar h1 {
+                font-size: 17px;
+            }
+
+            .hero h2 {
+                font-size: 34px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h1>🏠 Hostel Management System</h1>
+
+        <a href="{{ url_for('login') }}" class="login-btn">
+            Admin Login
+        </a>
+
+    </div>
+
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h2>
+                Welcome to Hostel Management System
+            </h2>
+
+            <p>
+                A simple and efficient web application for managing
+                hostel students, rooms, room allocations, fees and
+                leave records in one place.
+            </p>
+
+            <a href="{{ url_for('login') }}" class="start-btn">
+                Get Started
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="features">
+
+        <h2>Our Modules</h2>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="icon">👨‍🎓</div>
+
+                <h3>Students</h3>
+
+                <p>
+                    Manage student details and records.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">🚪</div>
+
+                <h3>Rooms</h3>
+
+                <p>
+                    Manage hostel room details and availability.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">🛏️</div>
+
+                <h3>Allocation</h3>
+
+                <p>
+                    Allocate available rooms to students.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">💰</div>
+
+                <h3>Fees</h3>
+
+                <p>
+                    Maintain hostel and mess fee records.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="icon">📋</div>
+
+                <h3>Leaves</h3>
+
+                <p>
+                    Manage leave applications and status.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        <p>
+            © 2026 Hostel Management System
+        </p>
+
+    </div>
+
+</body>
+
+</html>

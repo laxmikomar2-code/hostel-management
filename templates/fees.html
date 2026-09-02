@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hostel Fees</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #07111f, #163d59);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #3498db;
+            padding: 10px 18px;
+            border-radius: 7px;
+            margin-right: 10px;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: white;
+            background: #e74c3c;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .form-box,
+        .table-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .add-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 7px;
+            background: #0072ff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #005dcc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #163d59;
+            color: white;
+        }
+
+        .status-paid {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .delete {
+            text-decoration: none;
+            color: white;
+            background: #e74c3c;
+            padding: 7px 12px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 900px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .navbar h1 {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h1>🏠 Hostel Management System</h1>
+
+        <div>
+            <a href="{{ url_for('dashboard') }}" class="back">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <!-- ADD FEE -->
+
+        <div class="form-box">
+
+            <h2>💰 Add Hostel Fee</h2>
+
+            {% if message %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+
+            <form method="POST">
+
+                <div class="form-grid">
+
+                    <!-- STUDENT -->
+
+                    <div class="form-group">
+
+                        <label>Student</label>
+
+                        <select name="student_id" required>
+
+                            <option value="">
+                                Select Student
+                            </option>
+
+                            {% for student in students %}
+
+                                <option value="{{ student.student_id }}">
+                                    {{ student.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- FEE TYPE -->
+
+                    <div class="form-group">
+
+                        <label>Fee Type</label>
+
+                        <select name="fee_type" required>
+
+                            <option value="">
+                                Select Fee Type
+                            </option>
+
+                            <option value="Hostel Fee">
+                                Hostel Fee
+                            </option>
+
+                            <option value="Mess Fee">
+                                Mess Fee
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- AMOUNT -->
+
+                    <div class="form-group">
+
+                        <label>Amount</label>
+
+                        <input
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            placeholder="Enter amount"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PAYMENT DATE -->
+
+                    <div class="form-group">
+
+                        <label>Payment Date</label>
+
+                        <input
+                            type="date"
+                            name="payment_date"
+                        >
+
+                    </div>
+
+
+                    <!-- LAST DATE -->
+
+                    <div class="form-group">
+
+                        <label>Last Date</label>
+
+                        <input
+                            type="date"
+                            name="last_date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>Payment Status</label>
+
+                        <select name="payment_status" required>
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="Paid">
+                                Paid
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="add-btn">
+                    ➕ Add Fee
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- FEE LIST -->
+
+        <div class="table-box">
+
+            <h2>📋 Fee List</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Student</th>
+
+                        <th>Fee Type</th>
+
+                        <th>Amount</th>
+
+                        <th>Payment Date</th>
+
+                        <th>Last Date</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% if fees %}
+
+                        {% for fee in fees %}
+
+                            <tr>
+
+                                <td>
+                                    {{ fee.fee_id }}
+                                </td>
+
+                                <td>
+                                    {{ fee.student_name }}
+                                </td>
+
+                                <td>
+                                    {{ fee.fee_type }}
+                                </td>
+
+                                <td>
+                                    ₹{{ fee.amount }}
+                                </td>
+
+                                <td>
+                                    {{ fee.payment_date or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ fee.last_date or "-" }}
+                                </td>
+
+                                <td>
+
+                                    {% if fee.payment_status == "Paid" %}
+
+                                        <span class="status-paid">
+                                            Paid
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status-pending">
+                                            Pending
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="7" style="text-align:center;">
+                                No fee records found.
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+

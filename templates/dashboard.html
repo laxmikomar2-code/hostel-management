@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hostel Management Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #07111f, #163d59);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: white;
+            background: #e74c3c;
+
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card .icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0072ff;
+        }
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h1>
+            🏠 Hostel Management System
+        </h1>
+
+        <a href="{{ url_for('logout') }}"
+           class="logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <div class="container">
+
+
+        <div class="welcome">
+
+            <h2>
+                Welcome, {{ username }} 👋
+            </h2>
+
+            <p>
+                Manage your hostel efficiently from the admin dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+
+            <!-- STUDENTS -->
+
+            <div class="card"
+                 onclick="window.location.href='{{ url_for('students') }}'">
+
+                <div class="icon">
+                    👨‍🎓
+                </div>
+
+                <h3>
+                    Students
+                </h3>
+
+                <div class="number">
+                    {{ students }}
+                </div>
+
+            </div>
+
+
+            <!-- ROOMS -->
+
+            <div class="card"
+                 onclick="window.location.href='{{ url_for('rooms') }}'">
+
+                <div class="icon">
+                    🚪
+                </div>
+
+                <h3>
+                    Rooms
+                </h3>
+
+                <div class="number">
+                    {{ rooms }}
+                </div>
+
+            </div>
+
+
+            <!-- FEES -->
+
+            <div class="card"
+                 onclick="window.location.href='{{ url_for('fees') }}'">
+
+                <div class="icon">
+                    💰
+                </div>
+
+                <h3>
+                    Fees
+                </h3>
+
+                <div class="number">
+                    {{ fees }}
+                </div>
+
+            </div>
+
+
+            <!-- LEAVES -->
+
+            <div class="card"
+                 onclick="window.location.href='{{ url_for('leaves') }}'">
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <h3>
+                    Leaves
+                </h3>
+
+                <div class="number">
+                    {{ leaves }}
+                </div>
+
+            </div>
+
+
+            <!-- ROOM ALLOCATION -->
+
+            <div class="card"
+                 onclick="window.location.href='{{ url_for('allocations') }}'">
+
+                <div class="icon">
+                    🛏️
+                </div>
+
+                <h3>
+                    Room Allocation
+                </h3>
+
+                <div class="number">
+                    →
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+

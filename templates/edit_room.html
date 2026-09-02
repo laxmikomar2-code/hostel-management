@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Room</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #07111f, #163d59);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #555;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #ddd;
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+
+            padding: 12px;
+
+            border: none;
+            border-radius: 7px;
+
+            background: #0072ff;
+            color: white;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005dcc;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="navbar">
+
+        <h1>
+            🏠 Hostel Management System
+        </h1>
+
+        <a href="{{ url_for('rooms') }}"
+           class="back">
+            ← Rooms
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="box">
+
+            <h2>
+                ✏️ Edit Room
+            </h2>
+
+
+            <form method="POST">
+
+
+                <label>
+                    Room Number
+                </label>
+
+                <input
+                    type="text"
+                    name="room_number"
+                    value="{{ room.room_number }}"
+                    required
+                >
+
+
+                <label>
+                    Room Type
+                </label>
+
+                <input
+                    type="text"
+                    name="room_type"
+                    value="{{ room.room_type or '' }}"
+                >
+
+
+                <label>
+                    Capacity
+                </label>
+
+                <input
+                    type="number"
+                    name="capacity"
+                    value="{{ room.capacity }}"
+                    min="1"
+                    required
+                >
+
+
+                <label>
+                    Occupied
+                </label>
+
+                <input
+                    type="number"
+                    name="occupied"
+                    value="{{ room.occupied }}"
+                    min="0"
+                    required
+                >
+
+
+                <label>
+                    Status
+                </label>
+
+                <select name="status">
+
+                    <option value="Available"
+                        {% if room.status == "Available" %}
+                        selected
+                        {% endif %}>
+                        Available
+                    </option>
+
+                    <option value="Full"
+                        {% if room.status == "Full" %}
+                        selected
+                        {% endif %}>
+                        Full
+                    </option>
+
+                </select>
+
+
+                <button type="submit">
+                    Update Room
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

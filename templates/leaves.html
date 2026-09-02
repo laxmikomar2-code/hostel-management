@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Leave Management</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #07111f, #163d59);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #0072ff;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background: #0072ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #005edb;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #07111f;
+            color: white;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+
+        .approve {
+            background: green;
+            color: white;
+            padding: 7px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .reject {
+            background: red;
+            color: white;
+            padding: 7px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 800px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h1>📋 Leave Management</h1>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="back">
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+
+        {% if message %}
+
+        <div class="success">
+            {{ message }}
+        </div>
+
+        {% endif %}
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- ADD LEAVE -->
+
+        <div class="box">
+
+            <h2>➕ Apply Leave</h2>
+
+            <form method="POST">
+
+
+                <div>
+
+                    <label>Student</label>
+
+                    <select name="student_id" required>
+
+                        <option value="">
+                            Select Student
+                        </option>
+
+                        {% for student in students %}
+
+                        <option value="{{ student.student_id }}">
+                            {{ student.name }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>From Date</label>
+
+                    <input type="date"
+                           name="from_date"
+                           required>
+
+                </div>
+
+
+                <div>
+
+                    <label>To Date</label>
+
+                    <input type="date"
+                           name="to_date"
+                           required>
+
+                </div>
+
+
+                <div>
+
+                    <label>Reason</label>
+
+                    <textarea name="reason"
+                              rows="3"
+                              placeholder="Enter leave reason"></textarea>
+
+                </div>
+
+
+                <button type="submit">
+                    Apply Leave
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- LEAVE LIST -->
+
+        <div class="box">
+
+            <h2>📋 Leave List</h2>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Student</th>
+
+                    <th>From</th>
+
+                    <th>To</th>
+
+                    <th>Reason</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+
+                {% for leave in leaves %}
+
+                <tr>
+
+                    <td>
+                        {{ leave.leave_id }}
+                    </td>
+
+                    <td>
+                        {{ leave.student_name }}
+                    </td>
+
+                    <td>
+                        {{ leave.from_date }}
+                    </td>
+
+                    <td>
+                        {{ leave.to_date }}
+                    </td>
+
+                    <td>
+                        {{ leave.reason }}
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td class="status">
+
+                        {% if leave.status == "Approved" %}
+
+                            <span class="approved">
+                                Approved
+                            </span>
+
+                        {% elif leave.status == "Rejected" %}
+
+                            <span class="rejected">
+                                Rejected
+                            </span>
+
+                        {% else %}
+
+                            <span class="pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        {% if leave.status == "Pending" %}
+
+                            <a href="{{ url_for('approve_leave', leave_id=leave.leave_id) }}"
+                               class="approve">
+                                Approve
+                            </a>
+
+                            <a href="{{ url_for('reject_leave', leave_id=leave.leave_id) }}"
+                               class="reject">
+                                Reject
+                            </a>
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="7"
+                        style="text-align:center;">
+
+                        No leave requests found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
+
